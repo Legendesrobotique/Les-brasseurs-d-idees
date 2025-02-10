@@ -7,7 +7,6 @@
 //#define PAMI_3
 //#define PAMI_4
 
-
 #include "config_control.h"
 #include "config_match.h"
 #include "config_meca.h"

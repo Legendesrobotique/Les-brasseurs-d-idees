@@ -24,10 +24,10 @@
  ******************************************************************************/
 typedef enum
 {
-  MVT_TYPE_NONE = 0u,         /* No profile selected */
-  MVT_TYPE_DISTANCE = 1u,     /* Ramp of triangular profil */
-  MVT_TYPE_ORIENTATION = 2u,  /* Ramp of trapezoïdal profil */
-} PositionManagerMvtTypeEn;   /* Enumeration used to select the mvt type */
+  MVT_TYPE_NONE = 0u,           /* No profile selected */
+  MVT_TYPE_DISTANCE = 1u,       /* Only distance */
+  MVT_TYPE_ORIENTATION = 2u,    /* Only orientation */
+} PositionManagerMvtTypeEn;     /* Enumeration used to select the mvt type */
 
 /******************************************************************************
    Static Functions Declarations
@@ -36,7 +36,6 @@ typedef enum
 /******************************************************************************
    Global Variables Declarations
  ******************************************************************************/
-//uint8_t positionMgrStatus_u8_g;
 int32_t startDistance_i32_g;
 int32_t startOrientation_i32_g;
 PositionManagerMvtTypeEn positionMgrMvtType_en_g;
@@ -68,7 +67,6 @@ RampParametersSt rampOrientation_st_g;
 void PositionMgrInit()
 {
   positionMgrMvtType_en_g = MVT_TYPE_NONE;
-  //positionMgrStatus_u8_g = 1;
   positionMgrState_en_g = POSITION_STATE_NONE;
 
   /* init pid submodule */
@@ -111,7 +109,7 @@ void PositionMgrUpdate(bool timeMeasure_b)
 
   /* Manages the update loop every pidGetDeltaTime() */
   if ( ( currentTime_u32 - lastExecutionTime_u32 ) >= (DELTA_TIME_S * 1000.0) )
-  {    
+  {
     /* issue a warning if more than a 50% increase in loop time */
     //    if ( ( currentTime_u32 - lastExecutionTime_u32 ) >= (PidGetDeltaTime() * 1000.0 * 1.5) )
     //    {
@@ -205,7 +203,7 @@ void PositionMgrUpdate(bool timeMeasure_b)
 
     /* Store the last execution time */
     lastExecutionTime_u32 = currentTime_u32;
-    
+
     if (PID_DISTANCE_DEBUG)
     {
       //Serial.print("PidDistance : ");
@@ -304,7 +302,7 @@ void PositionMgrUpdate(bool timeMeasure_b)
               theta_deg   : target theta corrdinate in degrees
 
 */
-void PositionMgrGotoXYTheta(double x_m, double y_m, double theta_deg)
+void PositionMgrGotoXYTheta(double xMeter, double yMeter, double thetaDeg)
 {
   IhmStop();
   positionMgrState_en_g = POSITION_STATE_MOVING;

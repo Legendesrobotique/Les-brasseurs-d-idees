@@ -5,7 +5,7 @@
  * Function Declarations
  ******************************************************************************/
 void TrajectoryMgrInit();
-void Trajectory(double colorSide, uint8_t trajectoryIndex_u8);
+void Trajectory(double colorSide);
 void TrajectoryMgrUpdate(bool timeMeasure_b);
 void TrajectoryMgrCalibTrajectory();
 void TrajectoryMgrMainTrajectory();
