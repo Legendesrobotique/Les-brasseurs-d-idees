@@ -12,6 +12,7 @@
 #include "obstacle_sensor.h"
 #include "odometry.h"
 #include "position_mgr.h"
+#include "sensor.h"
 
 /******************************************************************************
    Constants and Macros
@@ -144,7 +145,8 @@ void IhmDrawScreenMatch()
 
     case MATCH_STATE_COLOR_SELECTION:
       /* Waiting for color selection */
-      display.print(F(" - Select-"));
+      display.print(F("Select-"));
+      display.print(SensorGetVbatt(),1);
       break;
 
     case MATCH_STATE_BORDER_ADJUST:

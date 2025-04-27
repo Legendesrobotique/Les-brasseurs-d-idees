@@ -421,7 +421,14 @@ void TrajectoryMgrCalibTrajectory()
     case POSITION_STATE_STOPPED:
       /* Next move */
       //Serial.println("Next move");
-      TrajectoryCalibrateBorder(trajectoryIndex_u8);
+      /* Start sequence */
+      //TrajectoryCalibrateBorder(trajectoryIndex_u8);
+      /* To calibrate the distance instead */
+      //TrajectoryCalibrateDistance(2.0);
+      /* To calibrate the rotation instead */
+      //TrajectoryCalibrateRotation(3600.0);
+      /* To calibrate the rotation with the square method */
+      TrajectoryCalibrateSquare(trajectoryIndex_u8, 2.0);
       trajectoryIndex_u8 ++;
       break;
     case POSITION_STATE_EMERGENCY_STOPPED:
@@ -494,34 +501,75 @@ void TrajectoryMgrMainTrajectory()
 }
 
 /**
+   @brief     This function makes the robot do a calibration distance.
+
+
+   @param     trajectoryIndex_u8    Index used by the manager to determine which part of the trajectory it is on.
+
+              distance_d            Distance to go.
+
+   @result    none
+
+*/
+void TrajectoryCalibrateDistance(double distance_d)
+{
+  static bool trajectoryFinished_b = false;
+
+  if (trajectoryFinished_b == false)
+  {
+    PositionMgrGotoDistanceMeter(distance_d, true);
+    trajectoryFinished_b = true;
+  }
+}
+
+void TrajectoryCalibrateRotation(double angle_d)
+{
+  static bool trajectoryFinished_b = false;
+  double angleMult_d = 0;
+  if (MatchMgrGetColor() == MATCH_COLOR_BLUE)
+  {
+    angleMult_d = 1.0;
+  }
+  else
+  {
+    angleMult_d = -1.0;
+  }
+  
+  if (trajectoryFinished_b == false)
+  {
+    PositionMgrGotoOrientationDegree(angleMult_d*angle_d);
+    trajectoryFinished_b = true;
+  }
+}
+/**
    @brief     This function makes the robot do a calibration square.
+              The direction of rotation is selected by the color switch.
 
 
    @param     trajectoryIndex_u8    Index used by the manager to determine which part of the trajectory it is on.
 
               squareSizeM_d         Size in meters of the sides of the square.
 
-              direction_b           Direction (true cw, false, ccw).
-
    @result    none
 
 */
-void TrajectoryCalibrateSquare(uint8_t trajectoryIndex_u8, double squareSizeM_d, bool direction_b)
+void TrajectoryCalibrateSquare(uint8_t trajectoryIndex_u8, double squareSizeM_d)
 {
   static int8_t trajectoryIndexLast_i8 = -1;
   static bool trajectoryFinished_b = false;
 
   double angleDeg_d = 0;
-  if (direction_b == true)
+  if (MatchMgrGetColor() == MATCH_COLOR_BLUE)
+  {
     angleDeg_d = 90.0;
+  }
   else
+  {
     angleDeg_d = -90.0;
+  }
 
   if ( (trajectoryIndex_u8 > trajectoryIndexLast_i8) && (trajectoryFinished_b == false) )
   {
-    //Serial.print("Index : ");
-    //Serial.print(trajectoryIndex_u8);
-
     switch (trajectoryIndex_u8)
     {
       case 0:

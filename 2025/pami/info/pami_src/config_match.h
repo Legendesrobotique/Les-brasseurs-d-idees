@@ -85,8 +85,7 @@ inline pose_t trajectoryPoseArray[3] = {
 
 inline pose_t trajectoryPoseArray[3] = {
   {X1, Y1, 0.0},
-  {X1, Y1, ANGLE},
-  {X2, Y2, ANGLE}
+  {X2, Y2, 0.0}
 };
 #define nbMovement                  sizeof(trajectoryPoseArray) / sizeof(trajectoryPoseArray[0]) - 1
 
@@ -111,6 +110,21 @@ inline pose_t trajectoryPoseArray[3] = {
 #define MATCH_START_POSITION_X      0.15
 #define MATCH_START_POSITION_Y      0.30
 #define MATCH_START_POSITION_THETA  -30.0
+
+// Start in square {(0,1650);(50;1750)}
+// End at (1300,1300)
+
+#define X1                          25.0
+#define Y1                          1700.0
+#define X2                          1300.0
+#define Y2                          1300.0
+#define ANGLE                       pythagoraCalculation(X1, Y1, X2, Y2, false)
+
+inline pose_t trajectoryPoseArray[3] = {
+  {X1, Y1, 0.0},
+  {X2, Y2, 0.0}
+};
+#define nbMovement                  sizeof(trajectoryPoseArray) / sizeof(trajectoryPoseArray[0]) - 1
 
 #endif
 

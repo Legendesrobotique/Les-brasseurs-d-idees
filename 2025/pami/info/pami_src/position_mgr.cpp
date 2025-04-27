@@ -17,7 +17,7 @@
  ******************************************************************************/
 #define PID_DISTANCE_DEBUG      false
 #define PID_ORIENTATION_DEBUG   false
-#define POSITION_MGR_DEBUG      false
+#define POSITION_MGR_DEBUG      true
 
 /******************************************************************************
    Types declarations

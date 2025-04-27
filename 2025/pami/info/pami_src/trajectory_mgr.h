@@ -9,7 +9,9 @@ void Trajectory(double colorSide);
 void TrajectoryMgrUpdate(bool timeMeasure_b);
 void TrajectoryMgrCalibTrajectory();
 void TrajectoryMgrMainTrajectory();
-void TrajectoryCalibrateSquare(uint8_t trajectoryIndex_u8, double squareSizeM_d, bool direction_b);
+void TrajectoryCalibrateDistance(double distance_d);
+void TrajectoryCalibrateRotation(double angle_d);
+void TrajectoryCalibrateSquare(uint8_t trajectoryIndex_u8, double squareSizeM_d);
 void TrajectoryCalibrateBorder(uint8_t trajectoryIndex_u8);
 
 #endif
